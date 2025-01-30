@@ -10,7 +10,6 @@ export default function ButtonLink1({ linkName, linkPath, linkLogo }) {
 
   const dispatch = useDispatch();
 
-  console.log(activeSidebarLink);
   return (
     <Link
       onClick={() => dispatch(changeActiveSidebarLink(linkName))}

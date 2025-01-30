@@ -15,16 +15,14 @@ export default function HeaderComponent() {
 
   const handleSideBarOpen = function () {
     dispatch(toggleSideBar(!isDarkMode));
-    console.log(isSideBarOpened);
   };
 
   const handleToggleTheme = function () {
     dispatch(toggleDarkMode(isDarkMode === "dark" ? "light" : "dark"));
-    console.log(isDarkMode);
   };
 
   return (
-    <header className="w-full flex flex-col  lg:flex-row items-center justify-between py-2 gap-3">
+    <header className="w-full min-h-[5vh] flex flex-col  lg:flex-row items-center justify-between py-2 gap-3">
       <div className="w-full flex items-center gap-2 lg:hidden">
         <button
           className="w-5 h-5 lg:hidden text-white cursor-pointer "

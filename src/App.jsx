@@ -2,23 +2,26 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // HACK: IMPORTING EVERY ROUTES HERE
-import HomePage from "./pages/HomePage";
 import LayoutPage from "./pages/LayoutPage";
+import HomePage from "./pages/HomePage";
 import FavoritesPage from "./pages/FavoritesPage";
+import TopRatedPage from "./pages/TopRatedPage";
+import PopularArtistsPage from "./pages/PopularArtistsPage";
+import TrendingPage from "./pages/TrendingPage";
+import AboutPage from "./pages/AboutPage";
+
+// HACK: IMPORTING LOADERS
+import { trendingLoader } from "./services/Loaders/trendingLoader";
 
 // HACK: IMPORT REDUX JS STORE
 import store from "./features/store";
 import { Provider } from "react-redux";
-import TrendingPage from "./pages/TrendingPage";
-import TopRatedPage from "./pages/TopRatedPage";
-import PopularArtistsPage from "./pages/PopularArtistsPage";
-import AboutPage from "./pages/AboutPage";
 
 const browserRouter = createBrowserRouter([
   {
     element: <LayoutPage />,
     children: [
-      { path: "/", element: <HomePage /> },
+      { path: "/", element: <HomePage />, loader: trendingLoader },
       { path: "/favorites", element: <FavoritesPage /> },
       { path: "/trending", element: <TrendingPage /> },
       { path: "/top-rated", element: <TopRatedPage /> },

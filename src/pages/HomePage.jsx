@@ -1,5 +1,16 @@
+import { useLoaderData } from "react-router-dom";
+import HeroComponent from "../components/HomeComponents/HeroComponent";
+import TrendingsComponent from "../components/HomeComponents/TrendingsComponent";
+
 function HomePage() {
-  return <div className="w-full text-red-600 font-bold">Home Page</div>;
+  const trend = useLoaderData();
+
+  return (
+    <div className="size-full flex flex-col gap-32">
+      <HeroComponent data={trend?.results[0]} />
+      <TrendingsComponent data={trend?.results} />
+    </div>
+  );
 }
 
 export default HomePage;
