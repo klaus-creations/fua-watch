@@ -9,9 +9,13 @@ import TopRatedPage from "./pages/TopRatedPage";
 import PopularArtistsPage from "./pages/PopularArtistsPage";
 import TrendingPage from "./pages/TrendingPage";
 import AboutPage from "./pages/AboutPage";
+import DetailsPage from "./pages/DetailsPage";
 
 // HACK: IMPORTING LOADERS
-import { trendingLoader } from "./services/Loaders/trendingLoader";
+import { homePageLoader } from "./services/Loaders/homePageLoaders";
+import { detailsLoaders } from "./services/Loaders/detailPageLoader";
+import { trendingPageLoader } from "./services/Loaders/trendingPageLoaders";
+import { topRatedPageLoader } from "./services/Loaders/topRatedPageLoader";
 
 // HACK: IMPORT REDUX JS STORE
 import store from "./features/store";
@@ -21,12 +25,25 @@ const browserRouter = createBrowserRouter([
   {
     element: <LayoutPage />,
     children: [
-      { path: "/", element: <HomePage />, loader: trendingLoader },
+      { path: "/", element: <HomePage />, loader: homePageLoader },
       { path: "/favorites", element: <FavoritesPage /> },
-      { path: "/trending", element: <TrendingPage /> },
-      { path: "/top-rated", element: <TopRatedPage /> },
+      {
+        path: "/trending",
+        element: <TrendingPage />,
+        loader: trendingPageLoader,
+      },
+      {
+        path: "/top-rated",
+        element: <TopRatedPage />,
+        loader: topRatedPageLoader,
+      },
       { path: "/popular-artists", element: <PopularArtistsPage /> },
       { path: "/about", element: <AboutPage /> },
+      {
+        path: "/details/:detailType/:id",
+        element: <DetailsPage />,
+        loader: detailsLoaders,
+      },
     ],
   },
 ]);

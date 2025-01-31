@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  type: "movies",
+  type: "movie",
 };
 
 const feedTypeSlice = createSlice({
-  name: "searchType",
+  name: "feedType",
   initialState,
   reducers: {
     changeSearchType: (state, action) => {
