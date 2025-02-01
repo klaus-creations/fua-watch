@@ -16,6 +16,7 @@ import { homePageLoader } from "./services/Loaders/homePageLoaders";
 import { detailsLoaders } from "./services/Loaders/detailPageLoader";
 import { trendingPageLoader } from "./services/Loaders/trendingPageLoaders";
 import { topRatedPageLoader } from "./services/Loaders/topRatedPageLoader";
+import { popularArtistsLoader } from "./services/Loaders/popularArtisPageLoader";
 
 // HACK: IMPORT REDUX JS STORE
 import store from "./features/store";
@@ -37,7 +38,11 @@ const browserRouter = createBrowserRouter([
         element: <TopRatedPage />,
         loader: topRatedPageLoader,
       },
-      { path: "/popular-artists", element: <PopularArtistsPage /> },
+      {
+        path: "/popular-artists",
+        element: <PopularArtistsPage />,
+        loader: popularArtistsLoader,
+      },
       { path: "/about", element: <AboutPage /> },
       {
         path: "/details/:detailType/:id",

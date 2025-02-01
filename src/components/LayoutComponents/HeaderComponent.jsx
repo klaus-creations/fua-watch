@@ -6,6 +6,7 @@ import { toggleSideBar } from "../../features/slices/SidebarSlice";
 import { toggleDarkMode } from "../../features/slices/themeSlice";
 import Input from "../ui/Input";
 import Logo from "../ui/Logo";
+import { changeFeedType } from "../../features/slices/feedTypeSlice";
 
 export default function HeaderComponent() {
   const isDarkMode = useSelector((state) => state.theme.themeSelector);
@@ -36,9 +37,7 @@ export default function HeaderComponent() {
         </button>
         <Logo />
 
-        <button className="ml-auto text-sky-700 shadow-sm    shadow-sky-700/[.7] px-2 py-1">
-          Movies
-        </button>
+        <FeedType />
         <button
           className="w-5 h-5 text-white cursor-pointer"
           onClick={handleToggleTheme}
@@ -60,9 +59,7 @@ export default function HeaderComponent() {
       </div>
 
       <div className="hidden lg:flex">
-        <button className="ml-auto text-sky-700 shadow-sm shadow-sky-700/[.7] px-2 py-1">
-          Movies
-        </button>
+        <FeedType />
       </div>
 
       <div className="hidden lg:flex gap-2 items-center">
@@ -85,3 +82,25 @@ export default function HeaderComponent() {
     </header>
   );
 }
+
+const FeedType = function () {
+  const feedType = useSelector((state) => state.feedType.type);
+  const dispatch = useDispatch();
+
+  const handleClickToggle = function () {
+    if (feedType === "movie") {
+      dispatch(changeFeedType("tv"));
+    } else {
+      dispatch(changeFeedType("movie"));
+    }
+  };
+
+  return (
+    <button
+      onClick={handleClickToggle}
+      className="ml-auto text-sky-700 shadow-sm    shadow-sky-700/[.7] px-2 py-1 cursor-pointer"
+    >
+      {feedType === "movie" ? "MOVIES" : "TV SERIES"}
+    </button>
+  );
+};

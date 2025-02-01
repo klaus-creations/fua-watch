@@ -1,7 +1,7 @@
-import store from "../features/store";
-
 const API_URL = "https://api.themoviedb.org/3";
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+
+import store from "../features/store";
 // NOTE: ALL THE API REQUESTS TO THE TMDB API
 
 // HACK: GETTING TRENDING MOVIES AND TV SERIESES
@@ -103,7 +103,6 @@ export const getDetails = async function (
   const res = await fetch(`${API_URL}/${type}/${id}?${queryString}`, options);
 
   if (!res.ok) {
-    console.log("hello from the error");
     throw new Error(`Error: ${res.statusText}`);
   }
 
@@ -166,4 +165,87 @@ export const getTopRated = async function (
   }
 
   return await res.json();
+};
+
+// HACK: GETTING POPULAR ARTISTS
+export const getPopularArtist = async function (params = {}, headers = {}) {
+  const queryString = new URLSearchParams({
+    ...params,
+    api_key: API_KEY,
+    language: "en-US",
+  });
+
+  const options = {
+    method: "GET",
+    headers: {
+      ...headers,
+    },
+  };
+  const res = await fetch(`${API_URL}/person/popular?${queryString}`, options);
+  if (!res.ok) {
+    throw new Error(`Error: ${res.statusText}`);
+  }
+
+  return await res.json();
+};
+
+// HACK: GETTING MOVIE RECOMMENADTIONS
+export const getRecommendations = async function (
+  type,
+  id,
+  params = {},
+  headers = {}
+) {
+  const queryString = new URLSearchParams({
+    ...params,
+    api_key: API_KEY,
+    language: "en-US",
+    page: 1,
+  });
+
+  const options = {
+    method: "GET",
+    headers: {
+      ...headers,
+      accept: "application/json",
+    },
+  };
+
+  const res = await fetch(
+    `${API_URL}/${type}/${id}/recommendations?${queryString}`,
+    options
+  );
+  if (!res.ok) {
+    throw new Response("Error while fetching recommendation");
+  }
+
+  return res.json();
+};
+
+// HACK: GETTING MOVIE REVIEWS
+export const getReviews = async function (type, id, params = {}, headers = {}) {
+  const queryString = new URLSearchParams({
+    ...params,
+    api_key: API_KEY,
+    language: "en-US",
+    page: 1,
+  });
+
+  const options = {
+    method: "GET",
+    headers: {
+      ...headers,
+      accept: "application/json",
+    },
+  };
+
+  const res = await fetch(
+    `${API_URL}/${type}/${id}/reviews?${queryString}`,
+    options
+  );
+  if (!res.ok) {
+    throw new Response("Error while fetching recommendation");
+  }
+
+  return res.json();
 };

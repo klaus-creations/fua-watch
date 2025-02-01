@@ -18,6 +18,7 @@ export default function PopularTvMovieComponent({ data }) {
       dispatch(setPopularMoviesTVPage(activeSlide + 1));
     }
   };
+
   return (
     <div className="w-full  dark:bg-indigo-950 bg-indigo-900 flex flex-col gap-5 items-start px-4 lg:px-6 py-4 md:py-8">
       <div className="w-full flex items-center gap-4">

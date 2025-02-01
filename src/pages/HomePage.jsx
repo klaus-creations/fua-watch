@@ -10,13 +10,12 @@ function HomePage() {
   const { popular, trend, upcoming } = useLoaderData();
   const revalidator = useRevalidator();
   const pageparam = useSelector((state) => state.popularMoviesTv);
-  console.log(upcoming);
-  console.log(popular);
+  const feedType = useSelector((state) => state.feedType.type);
 
   useEffect(() => {
     revalidator.revalidate(); // Re-run the loader whenever pageParam changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageparam]);
+  }, [pageparam, feedType]);
 
   return (
     <div className="size-full flex flex-col gap-32">

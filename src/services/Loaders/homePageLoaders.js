@@ -25,7 +25,9 @@ const popularTVMoviePeopleLoader = async function () {
 };
 
 const trendingLoader = async function () {
-  const values = await getTrending("tv", "day");
+  const state = store.getState();
+  const feedType = state.feedType.type;
+  const values = await getTrending(feedType, "day");
   return values;
 };
 
