@@ -21,7 +21,7 @@ export default function TrendingPage() {
     }
   };
   return (
-    <div className="w-full  dark:bg-indigo-950 flex flex-col gap-5 items-start px-4 lg:px-6 py-4 md:py-8">
+    <div className="w-full  flex flex-col gap-5 items-start px-4 lg:px-6 py-4 md:py-8">
       <div className="w-full flex items-center gap-4">
         <h2 className="text-xl font-bold lg:text-2xl tracking-[1px] text-sky-700">
           Trendings

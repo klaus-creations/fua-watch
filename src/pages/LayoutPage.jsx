@@ -21,7 +21,7 @@ function LayoutPage() {
 
       {/* MAIN + FOOTER + HEADER */}
       <section className="w-full lg:w-[85%] 2xl:w-[88%] h-full overflow-hidden absolute top-0 right-0 flex flex-col">
-        <section className="w-[inherit] fixed top-0 right-0 z-[1000] bg-slate-700/[.4] dark:bg-slate-950/[.4] px-5 lg:px-7">
+        <section className="w-full z-[1000] bg-slate-700/[.6] dark:bg-slate-950/[.4] px-5 lg:px-7">
           <HeaderComponent />
         </section>
 
