@@ -179,6 +179,7 @@ export const getPopularArtist = async function (params = {}, headers = {}) {
     method: "GET",
     headers: {
       ...headers,
+      accept: "application/json",
     },
   };
   const res = await fetch(`${API_URL}/person/popular?${queryString}`, options);
@@ -246,6 +247,44 @@ export const getReviews = async function (type, id, params = {}, headers = {}) {
   if (!res.ok) {
     throw new Response("Error while fetching recommendation");
   }
+
+  return res.json();
+};
+
+export const getSearchvalues = async function (
+  query,
+  type,
+  params = {},
+  headers = {
+    "Content-Type": "application/json",
+    accept: "application/json",
+    Authorization:
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5N2MzMjgxNDcyYzViMDc5YWUyZjZiZjlkMWMyNmYwMyIsIm5iZiI6MTczNzk3NTIxNy42MTIsInN1YiI6IjY3OTc2NWIxMTZmMGQ5NjBkZjIzYWUxMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.XSa_hqkD2AF2N1UlycXQrac97jwm0bFU32KWrBVTSu0",
+  }
+) {
+  const queryString = new URLSearchParams({
+    ...params,
+    api_key: API_KEY,
+    include_adult: false,
+    language: "en-US",
+    page: 1,
+    query,
+  });
+
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+    },
+    header: {
+      ...headers,
+    },
+  };
+
+  const res = await fetch(
+    `${API_URL}/search/${type}?${queryString.toString()}`, // ✅ Add "?" before queryString
+    options
+  );
 
   return res.json();
 };

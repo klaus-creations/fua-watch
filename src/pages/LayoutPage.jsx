@@ -5,8 +5,11 @@ import SidebarComponent from "../components/LayoutComponents/SidebarComponent";
 import HeaderComponent from "../components/LayoutComponents/HeaderComponent";
 import FooterComponent from "../components/LayoutComponents/FooterComponent";
 import { useSelector } from "react-redux";
+import SearchComponent from "../components/CommonPages/SearchComponent";
 
 function LayoutPage() {
+  const search = useSelector((state) => state.search.word);
+
   const darkMode = useSelector((state) => state.theme.themeSelector);
   return (
     <div
@@ -33,6 +36,7 @@ function LayoutPage() {
           <FooterComponent />
         </section>
       </section>
+      {search.length > 3 && <SearchComponent />}
     </div>
   );
 }

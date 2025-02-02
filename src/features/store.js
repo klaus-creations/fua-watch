@@ -6,6 +6,7 @@ import sideBarSlice from "./slices/SidebarSlice";
 import sidebarLink from "./slices/activeSideBarLink";
 import pageSlice from "./slices/pageSlice";
 import feedTypeSlice from "./slices/feedTypeSlice";
+import searchSlice from "./slices/searchSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     sidebarLink: sidebarLink,
     page: pageSlice,
     feedType: feedTypeSlice,
+    search: searchSlice,
   },
 });
 
