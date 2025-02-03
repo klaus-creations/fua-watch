@@ -1,3 +1,3 @@
 export default function FooterComponent() {
-  return <footer className="w-full h-full"></footer>;
+  return <footer className="w-full"></footer>;
 }
