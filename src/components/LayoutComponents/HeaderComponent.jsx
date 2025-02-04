@@ -7,19 +7,27 @@ import { toggleDarkMode } from "../../features/slices/themeSlice";
 import Input from "../ui/Input";
 import Logo from "../ui/Logo";
 import { changeFeedType } from "../../features/slices/feedTypeSlice";
+import { changeSearchType } from "../../features/slices/searchSlice";
 
 export default function HeaderComponent() {
   const isDarkMode = useSelector((state) => state.theme.themeSelector);
   const isSideBarOpened = useSelector((state) => state.sidebar.isOpened);
+  const searchType = useSelector((state) => state.search.type);
 
   const dispatch = useDispatch();
 
   const handleSideBarOpen = function () {
-    dispatch(toggleSideBar(!isDarkMode));
+    dispatch(toggleSideBar(!isSideBarOpened));
   };
 
   const handleToggleTheme = function () {
     dispatch(toggleDarkMode(isDarkMode === "dark" ? "light" : "dark"));
+  };
+
+  const handlesearchType = function () {
+    if (searchType === "movie") dispatch(changeSearchType("tv"));
+    if (searchType === "tv") dispatch(changeSearchType("person"));
+    if (searchType === "person") dispatch(changeSearchType("movie"));
   };
 
   return (
@@ -35,7 +43,8 @@ export default function HeaderComponent() {
             <Menu className="size-full" />
           )}
         </button>
-        <Logo />
+
+        {!isSideBarOpened && <Logo />}
 
         <FeedType />
         <button
@@ -51,9 +60,12 @@ export default function HeaderComponent() {
       </div>
 
       <div className="flex lg:hidden items-center justify-between sm:justify-start sm:gap-5 w-full">
-        <button className="text-white text-[5px] flex items-center gap-1 border-[1px] border-sky-700/[.5] p-1 cursor-pointer rounded-lg shadow-sm    shadow-sky-700/[.3]">
+        <button
+          className="text-white text-[5px] flex items-center gap-1 border-[1px] border-sky-700/[.5] p-1 cursor-pointer rounded-lg shadow-sm    shadow-sky-700/[.3]"
+          onClick={handlesearchType}
+        >
           <SlidersHorizontal className="size-3" />
-          <span className="text-gray-200">Tv Shows</span>
+          <span className="text-gray-200">{searchType}</span>
         </button>
         <Input placeholder={"Tv Shows"} />
       </div>
@@ -63,9 +75,12 @@ export default function HeaderComponent() {
       </div>
 
       <div className="hidden lg:flex gap-2 items-center">
-        <button className="text-white text-[5px] flex items-center gap-1 border-[1px] border-sky-700/[.5] p-1 cursor-pointer rounded-lg shadow-sm    shadow-sky-700/[.3]">
+        <button
+          className="text-white text-[5px] flex items-center gap-1 border-[1px] border-sky-700/[.5] p-1 cursor-pointer rounded-lg shadow-sm    shadow-sky-700/[.3]"
+          onClick={handlesearchType}
+        >
           <SlidersHorizontal className="size-3" />
-          <span className="text-gray-200">Tv Shows</span>
+          <span className="text-gray-200">{searchType}</span>
         </button>
         <Input placeholder={"Tv Shows"} />
         <button

@@ -25,10 +25,6 @@ export default function PopularTvMovieComponent({ data }) {
         <h2 className="text-xl font-bold lg:text-2xl tracking-[1px] text-sky-700">
           Popular
         </h2>
-
-        <button className="text-white font-bold shadow-xl shadow-sky-700/[.5] text-base lg:text-xl px-4 py-1">
-          Day
-        </button>
       </div>
 
       <div className="w-full flex overflow-x-auto gap-5">

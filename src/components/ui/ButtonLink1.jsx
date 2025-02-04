@@ -2,6 +2,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { changeActiveSidebarLink } from "../../features/slices/activeSideBarLink";
+import { closeSidebar } from "../../utils/closeSdiebar";
 
 export default function ButtonLink1({ linkName, linkPath, linkLogo }) {
   const activeSidebarLink = useSelector(
@@ -12,7 +13,10 @@ export default function ButtonLink1({ linkName, linkPath, linkLogo }) {
 
   return (
     <Link
-      onClick={() => dispatch(changeActiveSidebarLink(linkName))}
+      onClick={() => {
+        dispatch(changeActiveSidebarLink(linkName));
+        closeSidebar(dispatch);
+      }}
       className={`flex items-center px-4 py-3 rounded-xs gap-2     text-gray-400  w-[90%] duration-300 ${
         activeSidebarLink === linkName
           ? "bg-sky-700"
