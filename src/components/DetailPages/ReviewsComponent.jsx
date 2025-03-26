@@ -23,31 +23,41 @@ export default function ReviewsComponent({ data }) {
 
   return (
     <div className="w-full lg:w-[48%] relative overflow-hidden h-96 ">
-      <h2 className="text-xl font-bold text-gray-700">Reviews</h2>
-      <button
-        onClick={handleLeftClick}
-        className="p-4 text-xl lg:text-2xl absolute top-[50%] -translate-y-[50%] left-2 z-10"
-      >
-        <ChevronLeft className="size-8 lg:size-10 text-white bg-sky-700/[.3] cursor-pointer rounded-xl" />
-      </button>
+      {!reviews ? (
+        <div className="size-full flex items-center justify-center ">
+          <span className="text-base lg:text-xl text-gray-800 dark:text-gray-200">
+            No Reviews
+          </span>
+        </div>
+      ) : (
+        <>
+          <h2 className="text-xl font-bold text-gray-700">Reviews</h2>
+          <button
+            onClick={handleLeftClick}
+            className="p-4 text-xl lg:text-2xl absolute top-[50%] -translate-y-[50%] left-2 z-10"
+          >
+            <ChevronLeft className="size-8 lg:size-10 text-white bg-sky-700/[.3] cursor-pointer rounded-xl" />
+          </button>
 
-      <button
-        onClick={handleRightClick}
-        className="p-4 text-xl lg:text-2xl absolute top-[50%] -translate-y-[50%] right-2 z-10"
-      >
-        <ChevronRight className="size-8 lg:size-10 text-white bg-sky-700/[.3] cursor-pointer rounded-xl" />
-      </button>
+          <button
+            onClick={handleRightClick}
+            className="p-4 text-xl lg:text-2xl absolute top-[50%] -translate-y-[50%] right-2 z-10"
+          >
+            <ChevronRight className="size-8 lg:size-10 text-white bg-sky-700/[.3] cursor-pointer rounded-xl" />
+          </button>
 
-      {reviews.map((review, i) => {
-        return (
-          <Review
-            key={review.id}
-            id={i}
-            activeSlide={activeReview}
-            review={review}
-          />
-        );
-      })}
+          {reviews.map((review, i) => {
+            return (
+              <Review
+                key={review.id}
+                id={i}
+                activeSlide={activeReview}
+                review={review}
+              />
+            );
+          })}
+        </>
+      )}
     </div>
   );
 }
