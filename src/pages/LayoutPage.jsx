@@ -61,6 +61,7 @@ function LayoutPage() {
           )}
         </section>
       </section>
+
       {search.length > 3 && <SearchComponent />}
     </div>
   );
