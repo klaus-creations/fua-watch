@@ -14,11 +14,13 @@ const Movie = function ({ data }) {
       onClick={handleClick}
       className="w-[90%] sm:w-[40%] dark:bg-indigo-950 bg-indigo-900 p-2  md:w-[30%] lg:w-[26%] 2xl:w-[23%] flex flex-col items-center justify-center shrink-0 relative rounded-lg pt-5"
     >
-      <img
-        src={tmdbImagePath(data.poster_path)}
-        alt="trending movies"
-        className="w-[90%] hover:scale-[1.03] hover:-rotate-[2deg] duration-300 hover:grayscale cursor-pointer rounded-xl"
-      />
+      <div className="w-[90%] h-96">
+        <img
+          src={tmdbImagePath(data.poster_path)}
+          alt="trending movies"
+          className="w-[100%%] h-full hover:scale-[1.03] hover:-rotate-[2deg] duration-300 hover:grayscale cursor-pointer rounded-xl"
+        />
+      </div>
 
       <div className="w-[90%] flex gap-4 justify-between relative z-10">
         <h3 className="text-xs md:text-base text-white p-2 font-bold tracking-[1px] rounded-2xl">
