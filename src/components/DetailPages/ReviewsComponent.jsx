@@ -1,15 +1,17 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { useState } from "react";
+import SectionHeader from "../ui/SectionHeader";
+import { EmptyState } from "./RecommendatinoMoviesComponent";
 
 /* eslint-disable react/prop-types */
 export default function ReviewsComponent({ data }) {
-  const reviews = data.slice(0, 5);
+  const reviews = data?.slice(0, 5) ?? [];
   const [activeReview, setActiveReview] = useState(0);
   const handleLeftClick = function () {
     if (activeReview > 0) {
       setActiveReview(activeReview - 1);
     } else {
-      setActiveReview(4);
+      setActiveReview(reviews.length - 1);
     }
   };
 
@@ -22,60 +24,107 @@ export default function ReviewsComponent({ data }) {
   };
 
   return (
-    <div className="w-full lg:w-[48%] relative overflow-hidden h-96 ">
-      {!reviews ? (
-        <div className="size-full flex items-center justify-center ">
-          <span className="text-base lg:text-xl text-gray-800 dark:text-gray-200">
-            No Reviews
-          </span>
-        </div>
+    <section className="flex flex-col gap-5 px-4 md:px-8">
+      <SectionHeader eyebrow="What people say" title="Reviews">
+        {reviews.length > 1 && (
+          <>
+            <NavButton onClick={handleLeftClick} label="Previous review">
+              <ChevronLeft className="size-5" />
+            </NavButton>
+            <NavButton onClick={handleRightClick} label="Next review">
+              <ChevronRight className="size-5" />
+            </NavButton>
+          </>
+        )}
+      </SectionHeader>
+
+      {reviews.length === 0 ? (
+        <EmptyState text="No reviews yet" />
       ) : (
         <>
-          <h2 className="text-xl font-bold text-gray-700">Reviews</h2>
-          <button
-            onClick={handleLeftClick}
-            className="p-4 text-xl lg:text-2xl absolute top-[50%] -translate-y-[50%] left-2 z-10"
-          >
-            <ChevronLeft className="size-8 lg:size-10 text-white bg-sky-700/[.3] cursor-pointer rounded-xl" />
-          </button>
+          <div className="relative h-80 overflow-hidden rounded-3xl border border-line bg-surface">
+            {reviews.map((review, i) => {
+              return (
+                <Review
+                  key={review.id}
+                  id={i}
+                  activeSlide={activeReview}
+                  review={review}
+                />
+              );
+            })}
+          </div>
 
-          <button
-            onClick={handleRightClick}
-            className="p-4 text-xl lg:text-2xl absolute top-[50%] -translate-y-[50%] right-2 z-10"
-          >
-            <ChevronRight className="size-8 lg:size-10 text-white bg-sky-700/[.3] cursor-pointer rounded-xl" />
-          </button>
-
-          {reviews.map((review, i) => {
-            return (
-              <Review
-                key={review.id}
-                id={i}
-                activeSlide={activeReview}
-                review={review}
-              />
-            );
-          })}
+          {reviews.length > 1 && (
+            <div className="flex justify-center gap-2">
+              {reviews.map((review, i) => (
+                <button
+                  key={review.id}
+                  onClick={() => setActiveReview(i)}
+                  aria-label={`Show review ${i + 1}`}
+                  className={`h-1.5 cursor-pointer rounded-full transition-all duration-300 ${
+                    i === activeReview
+                      ? "w-8 bg-gradient-accent"
+                      : "w-1.5 bg-line hover:bg-subtle"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
         </>
       )}
-    </div>
+    </section>
   );
 }
 
+const NavButton = function ({ onClick, label, children }) {
+  return (
+    <button
+      onClick={onClick}
+      aria-label={label}
+      className="grid size-9 cursor-pointer place-items-center rounded-full border border-line bg-surface text-fg transition-all hover:border-accent/40 hover:text-accent active:scale-95"
+    >
+      {children}
+    </button>
+  );
+};
+
 const Review = function ({ review, id, activeSlide }) {
   const slidingvalue = (id - activeSlide) * 100;
+  const rating = review.author_details?.rating;
   return (
     <div
-      className="duration-300 transition-all bg-indigo-950/[.3] w-full h-[90%] absolute left-o bottom-0 py-3 px-4 lg:px-14"
+      className="absolute inset-0 flex flex-col gap-4 p-6 transition-all duration-500 ease-out md:p-8"
       style={{
-        left: `${slidingvalue}%`,
+        transform: `translateX(${slidingvalue}%)`,
+        opacity: id === activeSlide ? 1 : 0,
       }}
     >
-      <h3 className="text-gray-950 dark:text-gray-100 text-base lg:text-xl tracking-[1px] font-bold h-[10%]">
-        {review.author}
-      </h3>
 
-      <p className="text-gray-700 dark:text-gray-300 text-sm lg:text-base h-[85%] overflow-auto">
+      <div className="flex items-center gap-3">
+        <span className="grid size-11 shrink-0 place-items-center rounded-full bg-gradient-accent font-display text-lg font-light uppercase text-on-accent">
+          {review.author?.[0]}
+        </span>
+        <div className="flex flex-col">
+          <h3 className="font-medium text-fg">{review.author}</h3>
+          <span className="text-xs text-subtle">
+            {review.created_at &&
+              new Date(review.created_at).toLocaleDateString(undefined, {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })}
+          </span>
+        </div>
+        {rating != null && (
+          <span className="ml-auto flex items-center gap-1 rounded-lg bg-amber-400/15 px-2 py-1 text-xs font-medium text-amber-600 dark:text-amber-400">
+            <Star className="size-3 fill-current" />
+            {rating}/10
+          </span>
+        )}
+      </div>
+
+      <p className="relative overflow-y-auto pr-2 text-sm leading-relaxed whitespace-pre-line text-muted md:text-base">
         {review.content}
       </p>
     </div>
