@@ -1,5 +1,7 @@
-import Movie from "../components/CommonPages/Movie";
+import { Flame } from "lucide-react";
+import MovieGrid from "../components/CommonPages/MovieGrid";
 import PageSlider from "../components/CommonPages/PageSlider";
+import PageHeader from "../components/ui/PageHeader";
 import { useDispatch, useSelector } from "react-redux";
 import { setTrendingPage } from "../features/slices/pageSlice";
 import { useLoaderData } from "react-router-dom";
@@ -21,18 +23,15 @@ export default function TrendingPage() {
     }
   };
   return (
-    <div className="w-full  flex flex-col gap-5 items-start px-4 lg:px-6 py-4 md:py-8">
-      <div className="w-full flex items-center gap-4">
-        <h2 className="text-xl font-bold lg:text-2xl tracking-[1px] text-sky-700">
-          Trendings
-        </h2>
-      </div>
+    <div className="flex w-full flex-col gap-10 px-4 pt-10 md:px-8">
+      <PageHeader
+        icon={Flame}
+        eyebrow="Today"
+        title="Trending"
+        description="The TV shows everyone is talking about right now, updated daily."
+      />
 
-      <div className="w-full flex flex-wrap gap-10 gap-y-5">
-        {data.map((el) => {
-          return <Movie key={el.id} data={el} />;
-        })}
-      </div>
+      <MovieGrid data={data} />
 
       <PageSlider
         activeSlide={activeSlide}
