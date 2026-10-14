@@ -1,37 +1,38 @@
 /* eslint-disable react/prop-types */
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { changeActiveSidebarLink } from "../../features/slices/activeSideBarLink";
+import { useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
 import { closeSidebar } from "../../utils/closeSdiebar";
 
-export default function ButtonLink1({ linkName, linkPath, linkLogo }) {
-  const activeSidebarLink = useSelector(
-    (state) => state.sidebarLink.activeSidebarLink
-  );
-
+export default function ButtonLink1({ linkName, linkPath, LinkIcon }) {
   const dispatch = useDispatch();
 
   return (
-    <Link
-      onClick={() => {
-        dispatch(changeActiveSidebarLink(linkName));
-        closeSidebar(dispatch);
-      }}
-      className={`flex items-center px-4 py-3 rounded-xs gap-2     text-gray-400  w-[90%] duration-300 ${
-        activeSidebarLink === linkName
-          ? "bg-sky-700"
-          : "dark:bg-indigo-950/[.7] dark:hover:bg-indigo-950  hover:bg-indigo-900 bg-indigo-900/[.7]"
-      }`}
+    <NavLink
       to={linkPath}
+      end={linkPath === "/"}
+      onClick={() => closeSidebar(dispatch)}
+      className={({ isActive }) =>
+        `group relative flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-all duration-200 ${
+          isActive
+            ? "bg-accent/10 text-accent"
+            : "text-muted hover:bg-elevated hover:text-fg"
+        }`
+      }
     >
-      <img
-        src={`/${linkLogo}`}
-        alt="side bar link logo"
-        className="size-4 text-white"
-      />
-      <span className="text-sm text-[10px] 2xl:text-xs tracking-[1px]">
-        {linkName}
-      </span>
-    </Link>
+      {({ isActive }) => (
+        <>
+          <span
+            className={`absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-full bg-gradient-accent transition-all duration-300 ${
+              isActive ? "opacity-100" : "opacity-0 -translate-x-1"
+            }`}
+          />
+          <LinkIcon
+            className="size-[18px] shrink-0 transition-transform duration-200 group-hover:scale-110"
+            strokeWidth={isActive ? 2.4 : 2}
+          />
+          <span>{linkName}</span>
+        </>
+      )}
+    </NavLink>
   );
 }
