@@ -1,29 +1,23 @@
+import { Users } from "lucide-react";
 import { useLoaderData } from "react-router-dom";
 import ArtistComponent from "../components/PoplarArtistPages/ArtistComponent";
+import PageHeader from "../components/ui/PageHeader";
 
 export default function PopularArtistsPage() {
   const data = useLoaderData();
-  console.log(data?.results);
   return (
-    <div className="w-full">
-      <div className="w-full   flex flex-col gap-5 items-start px-4 lg:px-6 py-4 md:py-8">
-        <div className="w-full flex items-center gap-4">
-          <h2 className="text-xl font-bold lg:text-2xl tracking-[1px] text-sky-700">
-            Popular Artists
-          </h2>
-        </div>
+    <div className="flex w-full flex-col gap-10 px-4 pt-10 md:px-8">
+      <PageHeader
+        icon={Users}
+        eyebrow="People"
+        title="Popular Artists"
+        description="The actors, directors and creators getting the most attention this week."
+      />
 
-        <div className="w-full flex flex-wrap justify-between gap-y-5">
-          {data?.results.map((el) => {
-            return <ArtistComponent key={el.id} data={el} />;
-          })}
-        </div>
-
-        {/* <PageSlider
-        activeSlide={activeSlide}
-        onHandleLeft={handlePopularTVMovieLeft}
-        onHandleRight={handlePopularTVMovieRight}
-      /> */}
+      <div className="grid w-full grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 md:grid-cols-4 md:gap-x-5 xl:grid-cols-5 2xl:grid-cols-6">
+        {data?.results.map((el) => {
+          return <ArtistComponent key={el.id} data={el} />;
+        })}
       </div>
     </div>
   );
