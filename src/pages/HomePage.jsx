@@ -9,7 +9,7 @@ import Upcomings from "../components/HomeComponents/UpComming";
 function HomePage() {
   const { popular, trend, upcoming } = useLoaderData();
   const revalidator = useRevalidator();
-  const pageparam = useSelector((state) => state.popularMoviesTv);
+  const pageparam = useSelector((state) => state.page.popularMoviesTv);
   const feedType = useSelector((state) => state.feedType.type);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ function HomePage() {
   }, [pageparam, feedType]);
 
   return (
-    <div className="size-full flex flex-col gap-32">
+    <div className="flex w-full flex-col gap-14 md:gap-20">
       <HeroComponent data={trend?.results[0]} />
       <TrendingsComponent data={trend?.results} />
       <PopularTvMovieComponent data={popular?.results} />
