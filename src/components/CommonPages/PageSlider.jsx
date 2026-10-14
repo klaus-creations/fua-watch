@@ -1,37 +1,46 @@
 /* eslint-disable react/prop-types */
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
+const MAX_PAGE = 5;
+
 export default function PageSlider({
   onHandleLeft,
   onHandleRight,
   activeSlide,
 }) {
+  const pages = Array.from({ length: MAX_PAGE }, (_, i) => i + 1);
+
   return (
-    <div className="w-full sm:w-[85%] md:w-[75%] lg:w-[70%] 2xl:w-[60%] mx-auto justify-between flex">
+    <div className="mx-auto flex items-center gap-1 rounded-2xl border border-line bg-surface p-1.5 shadow-sm">
       <button
         onClick={onHandleLeft}
-        className="p-2 rounded-full border-[1px] border-sky-700/[.8] cursor-pointer text-white bg-black/[.3] shadow-md shdaow-sky-700 hover:scale-[1.02]"
+        disabled={activeSlide <= 1}
+        aria-label="Previous page"
+        className="grid size-9 cursor-pointer place-items-center rounded-xl text-fg transition-colors hover:bg-elevated disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-transparent"
       >
-        <ChevronLeft className="size-6 md:size-8" />
+        <ChevronLeft className="size-5" />
       </button>
-      <div className="flex items-center gap-2">
-        <span className="text-xs lg:text-base text-gray-300 bg-black/[.4] border-[1px] border-sky-700/[.7] p-2 rounded-lg">
-          {activeSlide > 1 ? activeSlide - 1 : 0}
-        </span>
 
-        <span className="text-base lg:text-xl text-gray-300 bg-black/[.4] border-[1px] shadow-md shadow-sky-700  border-sky-700/[.7] p-2 rounded-lg">
-          {activeSlide}
+      {pages.map((page) => (
+        <span
+          key={page}
+          className={`grid size-9 place-items-center rounded-xl text-sm font-medium transition-all duration-300 ${
+            page === activeSlide
+              ? "bg-gradient-accent text-on-accent shadow-md shadow-accent/30"
+              : "text-muted"
+          }`}
+        >
+          {page}
         </span>
+      ))}
 
-        <span className="text-xs lg:text-base text-gray-300 bg-black/[.4] border-[1px] border-sky-700/[.7] p-2 rounded-lg">
-          {activeSlide < 5 ? activeSlide + 1 : 0}
-        </span>
-      </div>
       <button
         onClick={onHandleRight}
-        className="p-2 rounded-full border-[1px] border-sky-700/[.8] cursor-pointer text-white bg-black/[.3] shadow-md shdaow-sky-700 hover:scale-[1.02]"
+        disabled={activeSlide >= MAX_PAGE}
+        aria-label="Next page"
+        className="grid size-9 cursor-pointer place-items-center rounded-xl text-fg transition-colors hover:bg-elevated disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-transparent"
       >
-        <ChevronRight className="size-6 md:size-8" />
+        <ChevronRight className="size-5" />
       </button>
     </div>
   );
