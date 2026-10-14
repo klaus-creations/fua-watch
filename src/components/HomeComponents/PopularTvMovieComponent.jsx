@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
-import Movie from "../CommonPages/Movie";
+import MovieRow from "../CommonPages/MovieRow";
 import PageSlider from "../CommonPages/PageSlider";
 import { useDispatch, useSelector } from "react-redux";
 import { setPopularMoviesTVPage } from "../../features/slices/pageSlice";
 
 export default function PopularTvMovieComponent({ data }) {
   const activeSlide = useSelector((state) => state.page.popularMoviesTv);
+  const feedType = useSelector((state) => state.feedType.type);
   const dispatch = useDispatch();
   const handlePopularTVMovieLeft = function () {
     if (activeSlide > 1) {
@@ -20,24 +21,20 @@ export default function PopularTvMovieComponent({ data }) {
   };
 
   return (
-    <div className="w-full  dark:bg-indigo-950 bg-indigo-900 flex flex-col gap-5 items-start px-4 lg:px-6 py-4 md:py-8">
-      <div className="w-full flex items-center gap-4">
-        <h2 className="text-xl font-bold lg:text-2xl tracking-[1px] text-sky-700">
-          Popular
-        </h2>
-      </div>
-
-      <div className="w-full flex overflow-x-auto gap-5">
-        {data.map((el) => {
-          return <Movie key={el.id} data={el} />;
-        })}
-      </div>
-
-      <PageSlider
-        activeSlide={activeSlide}
-        onHandleLeft={handlePopularTVMovieLeft}
-        onHandleRight={handlePopularTVMovieRight}
+    <div className="flex w-full flex-col gap-2">
+      <MovieRow
+        eyebrow="Everyone's watching"
+        title={feedType === "tv" ? "Popular TV Shows" : "Popular Movies"}
+        data={data}
       />
+
+      <div className="flex px-4 md:px-8">
+        <PageSlider
+          activeSlide={activeSlide}
+          onHandleLeft={handlePopularTVMovieLeft}
+          onHandleRight={handlePopularTVMovieRight}
+        />
+      </div>
     </div>
   );
 }
